@@ -1,17 +1,5 @@
-import Head from "next/head";
-import styled from "styled-components";
+import { Top } from "../components/pages/Top"
 
-export default function Home() {
-  return (
-    <>
-      <Head>
-        <title>chatGPT for Excel</title>
-      </Head>
-      <Test>test</Test>
-    </>
-  );
+export default function MyApp() {
+  return <Top />
 }
-
-const Test = styled.div`
-  color: red;
-`;
