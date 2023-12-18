@@ -1,48 +1,72 @@
 import styled from "styled-components"
 import { Layout } from "../../templates/Layout"
-import { Button, List, ListItem, ListItemButton, ListItemText } from "@mui/material"
 import { Spacer } from "../../atoms/Spacer"
+import { Menu } from "../../organisms/Menu"
+import { Result } from "../../organisms/Result"
+import { uploadExcel } from "@/src/utils/upload"
+import { ChangeEvent, useState } from "react"
+import { requestOpenApi } from "@/src/hooks/api"
+import { excelConversionToSentence } from "@/src/utils/convert"
+import { downloadExcel } from "@/src/utils/download"
+
+export type LineData = {
+  no: string
+  title: string
+  head1: string
+  head2: string
+  head3: string
+  head4: string
+  content1: string
+  content2: string
+  content3: string
+  content4: string
+  loading: boolean
+  completed: boolean
+}
+
+export type ExcelData = LineData[]
 
 export const Top = () => {
+  const [uploadDataList, setUploadDataList] = useState<ExcelData>([])
+  const [resultList, setResultList] = useState<string[]>([])
+
+  const handleUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    uploadExcel({ e, setUploadDataList })
+  }
+
+  const handleSendChatGPT = async () => {
+    const orderDataList = excelConversionToSentence(uploadDataList)
+    for (let i = 0; i < orderDataList.length; i++) {
+      setUploadDataList((prevState) =>
+        prevState.map((item, index) => (index === i ? { ...item, loading: true } : item))
+      )
+      const res = await requestOpenApi([
+        {
+          role: "user",
+          content: orderDataList[i]
+        }
+      ])
+      setUploadDataList((prevState) =>
+        prevState.map((item, index) => (index === i ? { ...item, loading: false, completed: true } : item))
+      )
+      if (!res) return
+      setResultList((prevState) => [...prevState, res.content ?? ""])
+    }
+  }
+
+  const handleDownload = () => {
+    downloadExcel({ uploadDataList, resultList })
+  }
+
   return (
     <Layout meta={{ pageTitle: "chatgpt excel" }}>
       <TitleWrapper>
         <Title>chatGPT for Excel</Title>
       </TitleWrapper>
       <Container>
-        <MenuContainer>
-          <ContentTitle>Result Download</ContentTitle>
-          <Spacer y={12} />
-          <Button variant="contained" color="primary" onClick={() => {}} style={{ width: "240px" }}>
-            download
-          </Button>
-          <Spacer y={12} />
-          <ContentTitle>Question Upload</ContentTitle>
-          <Spacer y={12} />
-          <Button variant="contained" component="label" style={{ width: "240px" }}>
-            Upload
-            <input type="file" hidden onChange={() => {}} />
-          </Button>
-          <Spacer y={24} />
-          <Button variant="contained" color="primary" onClick={() => {}} style={{ width: "240px" }}>
-            send
-          </Button>
-        </MenuContainer>
+        <Menu handleUpload={handleUpload} handleSendChatGPT={handleSendChatGPT} handleDownload={handleDownload} />
         <Spacer x={24} />
-        <ResultContainer>
-          <List>
-            <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary="Trash" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton component="a" href="#simple-list">
-                <ListItemText primary="Spam" />
-              </ListItemButton>
-            </ListItem>
-          </List>
-        </ResultContainer>
+        <Result uploadDataList={uploadDataList} />
       </Container>
     </Layout>
   )
@@ -62,24 +86,4 @@ const TitleWrapper = styled.div`
 
 const Title = styled.h1`
   margin-top: 100px;
-`
-
-const ContentTitle = styled.h2``
-
-const MenuContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 24px;
-  width: 300px;
-  border: solid 1px;
-  border-radius: 8px;
-`
-const ResultContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 700px;
-  border: solid 1px;
-  border-radius: 8px;
 `
