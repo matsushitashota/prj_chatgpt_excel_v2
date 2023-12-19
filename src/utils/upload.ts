@@ -9,6 +9,7 @@ type Props = {
 
 export const uploadExcel = ({ e, setUploadDataList }: Props) => {
   if (!e.target.files || e.target.files.length === 0) return
+  setUploadDataList([])
   const file = e.target.files[0]
   const reader = new FileReader()
   reader.onload = (evt) => {

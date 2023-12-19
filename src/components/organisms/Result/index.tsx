@@ -30,7 +30,7 @@ export const Result = ({ uploadDataList }: Props) => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 700px;
+  width: 500px;
   border: solid 1px;
   border-radius: 8px;
 `

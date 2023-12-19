@@ -64,7 +64,12 @@ export const Top = () => {
         <Title>chatGPT for Excel</Title>
       </TitleWrapper>
       <Container>
-        <Menu handleUpload={handleUpload} handleSendChatGPT={handleSendChatGPT} handleDownload={handleDownload} />
+        <Menu
+          handleUpload={handleUpload}
+          handleSendChatGPT={handleSendChatGPT}
+          handleDownload={handleDownload}
+          readyChatGPT={uploadDataList.length < 1}
+        />
         <Spacer x={24} />
         <Result uploadDataList={uploadDataList} />
       </Container>

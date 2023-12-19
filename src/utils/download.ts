@@ -9,7 +9,10 @@ type Props = {
 
 export const downloadExcel = ({ uploadDataList, resultList }: Props) => {
   const exportDataList = uploadDataList.map((uploadData, index) => {
-    return { ...uploadData, result: resultList[index] }
+    // loadingとcompletedを取り除く
+    // eslint-disable-next-line
+    const { loading, completed, ...rest } = uploadData
+    return { ...rest, result: resultList[index] }
   })
 
   const worksheet = XLSX.utils.json_to_sheet(exportDataList, {

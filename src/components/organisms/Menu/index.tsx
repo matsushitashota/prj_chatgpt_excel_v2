@@ -7,14 +7,21 @@ type Props = {
   handleUpload: (e: ChangeEvent<HTMLInputElement>) => void
   handleSendChatGPT: () => void
   handleDownload: () => void
+  readyChatGPT: boolean
 }
 
-export const Menu = ({ handleUpload, handleSendChatGPT, handleDownload }: Props) => {
+export const Menu = ({ handleUpload, handleSendChatGPT, handleDownload, readyChatGPT }: Props) => {
   return (
     <Container>
       <ContentTitle>Result Download</ContentTitle>
       <Spacer y={12} />
-      <Button variant="contained" color="primary" onClick={handleDownload} style={{ width: "240px" }}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleDownload}
+        disabled={readyChatGPT}
+        style={{ width: "240px" }}
+      >
         download
       </Button>
       <Spacer y={12} />
@@ -24,8 +31,16 @@ export const Menu = ({ handleUpload, handleSendChatGPT, handleDownload }: Props)
         Upload
         <input type="file" hidden onChange={handleUpload} />
       </Button>
-      <Spacer y={24} />
-      <Button variant="contained" color="primary" onClick={handleSendChatGPT} style={{ width: "240px" }}>
+      <Spacer y={12} />
+      <ContentTitle>chatGPT</ContentTitle>
+      <Spacer y={12} />
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={handleSendChatGPT}
+        disabled={readyChatGPT}
+        style={{ width: "240px" }}
+      >
         send
       </Button>
     </Container>
