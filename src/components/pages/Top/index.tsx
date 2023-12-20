@@ -37,6 +37,7 @@ export const Top = () => {
   const handleSendChatGPT = async () => {
     const orderDataList = excelConversionToSentence(uploadDataList)
     for (let i = 0; i < orderDataList.length; i++) {
+      console.log("chatgptへ質問中:", orderDataList[i])
       setUploadDataList((prevState) =>
         prevState.map((item, index) => (index === i ? { ...item, loading: true } : item))
       )
@@ -46,6 +47,9 @@ export const Top = () => {
           content: orderDataList[i]
         }
       ])
+      console.log("---------------chatgptの回答--------------")
+      console.log(res.content)
+      console.log("-----------------------------------------")
       setUploadDataList((prevState) =>
         prevState.map((item, index) => (index === i ? { ...item, loading: false, completed: true } : item))
       )
