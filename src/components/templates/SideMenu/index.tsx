@@ -8,7 +8,7 @@ type Props = {
 
 const SideMenu = ({ isOpen, setIsOpen }: Props) => {
   return (
-    <Container isOpen={isOpen}>
+    <Container $isOpen={isOpen}>
       <SideMenuContentsContainer>
         <UserNameWrapper>
           <UserName>山田太郎</UserName>
@@ -24,13 +24,13 @@ const SideMenu = ({ isOpen, setIsOpen }: Props) => {
   )
 }
 
-const Container = styled.div<{ isOpen: boolean }>`
+const Container = styled.div<{ $isOpen: boolean }>`
   width: 220px;
   height: 100%; // ヘッダーの高さを引かずに、画面いっぱいに設定
   position: absolute;
   top: 0; // ヘッダーの高さを引かずに、画面のトップに設定
   left: 0;
-  transform: ${({ isOpen }) => (isOpen ? "translateX(0)" : "translateX(-100%)")};
+  transform: ${({ $isOpen }) => ($isOpen ? "translateX(0)" : "translateX(-100%)")};
   transition: transform 0.3s ease-in-out;
   z-index: 2; // 追加
   border: 5px solid white; // 10pxの白い縁を追加
