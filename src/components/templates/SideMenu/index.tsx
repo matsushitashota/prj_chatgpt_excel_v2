@@ -23,6 +23,9 @@ const SideMenu = ({ isOpen, setIsOpen }: Props) => {
           Prompts
         </Button>
         <Button variant="text" color="inherit">
+          Help
+        </Button>
+        <Button variant="text" color="inherit">
           Settings
         </Button>
         <Button variant="text" color="inherit">
