@@ -32,7 +32,10 @@ export const Layout = ({ children, meta }: Props) => {
   return (
     <>
       <Head {...meta} />
-      <Header $isOpen={isOpen}>{!isOpen && <MenuIcon onClick={() => setIsOpen(!isOpen)} />}</Header>
+      <Header $isOpen={isOpen}>
+        {!isOpen && <MenuIcon onClick={() => setIsOpen(!isOpen)} />}
+        <Title>Home</Title>
+      </Header>
       <SideMenu isOpen={isOpen} setIsOpen={setIsOpen} />
       <MainContent $isOpen={isOpen}>
         <Wrapper>{children}</Wrapper>
@@ -47,9 +50,12 @@ const Header = styled.header<{ $isOpen: boolean }>`
   left: ${({ $isOpen }) => ($isOpen ? "220px" : "0")};
   width: ${({ $isOpen }) => ($isOpen ? "calc(100% - 220px)" : "100%")};
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 0 15px;
+`
+
+const Title = styled.h1`
+  margin-left: 20px;
 `
 
 const MainContent = styled.main<{ $isOpen: boolean }>`

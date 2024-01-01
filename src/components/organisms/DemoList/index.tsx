@@ -207,7 +207,18 @@ export const DemoList = () => {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  width: 200px;
+  max-height: 1500px;
+  padding: 0 8px;
+  overflow: auto;
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 `
 
 const ListButton = styled(ListItemButton)`
