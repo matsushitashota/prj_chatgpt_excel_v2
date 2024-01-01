@@ -14,7 +14,7 @@ export const requestOpenApi = async (message: Message[]) => {
       // model: 'gpt-4',
       messages: message,
       temperature: 0.9,
-      max_tokens: 2000,
+      max_tokens: 2800,
     },
     {
       headers: {

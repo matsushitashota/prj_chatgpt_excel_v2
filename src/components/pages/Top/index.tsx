@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Layout } from "../../templates/Layout"
+import { FullLayout } from "../../templates/FullLayout"
 import { Spacer } from "../../atoms/Spacer"
 import { Menu } from "../../organisms/Menu"
 import { Result } from "../../organisms/Result"
@@ -63,7 +63,7 @@ export const Top = () => {
   }
 
   return (
-    <Layout meta={{ pageTitle: "chatgpt excel" }}>
+    <FullLayout meta={{ pageTitle: "chatgpt excel" }}>
       <TitleWrapper>
         <Title>chatGPT for Excel</Title>
       </TitleWrapper>
@@ -77,7 +77,7 @@ export const Top = () => {
         <Spacer x={24} />
         <Result uploadDataList={uploadDataList} />
       </Container>
-    </Layout>
+    </FullLayout>
   )
 }
 
