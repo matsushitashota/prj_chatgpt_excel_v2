@@ -1,5 +1,7 @@
+import { handleSignOut } from "@/src/hooks/api"
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft"
 import { Button as MuiButton } from "@mui/material"
+import { useRouter } from "next/router"
 import styled from "styled-components"
 
 type Props = {
@@ -8,6 +10,12 @@ type Props = {
 }
 
 const SideMenu = ({ isOpen, setIsOpen }: Props) => {
+  const router = useRouter()
+  const handleLogout = async () => {
+    handleSignOut()
+    router.push("/login")
+  }
+
   return (
     <Container $isOpen={isOpen}>
       <SideMenuContentsContainer>
@@ -28,7 +36,7 @@ const SideMenu = ({ isOpen, setIsOpen }: Props) => {
         <Button variant="text" color="inherit">
           Settings
         </Button>
-        <Button variant="text" color="inherit">
+        <Button variant="text" color="inherit" onClick={handleLogout}>
           Logout
         </Button>
       </SideMenuContentsContainer>

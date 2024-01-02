@@ -24,7 +24,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 120px;
-  gap: 120px;
+  gap: 200px;
   padding: 10px 20px;
   border: 1px solid lightgray;
   border-radius: 8px;

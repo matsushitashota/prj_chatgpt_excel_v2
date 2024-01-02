@@ -1,4 +1,11 @@
-import axios from 'axios';
+import axios from "axios"
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth"
+import { getFirestore, setDoc } from "firebase/firestore"
+import firebaseConfig from "./firabase"
+import { initializeApp } from "firebase/app"
+import { doc, getDoc } from "firebase/firestore"
+
+// -------------------------- ChatGPT 関連 -------------------------------------
 
 export type Message = {
   role: "system" | "assistant" | "user"
@@ -7,56 +14,79 @@ export type Message = {
 
 export const requestOpenApi = async (message: Message[]) => {
   const response = await axios.post(
-    'https://api.openai.com/v1/chat/completions',
+    "https://api.openai.com/v1/chat/completions",
     {
-      model: 'gpt-3.5-turbo',
+      model: "gpt-3.5-turbo",
       // gpt-4はトークン料金が高いため注意
       // model: 'gpt-4',
       messages: message,
       temperature: 0.9,
-      max_tokens: 2800,
+      max_tokens: 2800
     },
     {
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
-        'OpenAI-Learning-Mode': 'off',
-      },
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
+        "OpenAI-Learning-Mode": "off"
+      }
     }
-  );
+  )
 
-  return response.data.choices[0].message;
-};
+  return response.data.choices[0].message
+}
 
+// -------------------------- firebase 関連 -------------------------------------
 
+export const firebaseApp = initializeApp(firebaseConfig)
+const auth = getAuth(firebaseApp)
+const provider = new GoogleAuthProvider()
+const db = getFirestore(firebaseApp)
 
-// openaiのver3シリーズの方法
+export const signInWithGoogle = async (): Promise<boolean> => {
+  try {
+    const result = await signInWithPopup(auth, provider)
+    console.log("user", result.user)
+    return true
+  } catch (error) {
+    console.error("error", error)
+    return false
+  }
+}
 
-// import { Configuration, OpenAIApi } from "openai"
+export const handleSignOut = () => {
+  signOut(auth)
+    .then(() => {
+      console.log("signout")
+    })
+    .catch((error) => {
+      console.log("error", error.message)
+    })
+}
 
-// const configuration = new Configuration({
-//   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-//   baseOptions: {
-//     headers: {
-//       "OpenAI-Learning-Mode": "off"
-//     }
-//   }
-// })
-// delete configuration.baseOptions.headers["User-Agent"]
-// const openai = new OpenAIApi(configuration)
+export const handleSave = async () => {
+  const user = await auth.currentUser
+  if (user) {
+    const docRef = await setDoc(doc(db, "api_key", user.uid), {
+      key: "key12345"
+    })
+    console.log("Document written with ID: ", docRef)
+  } else {
+    console.error("No user is signed in.")
+  }
+}
 
-// export type Message = {
-//   role: "system" | "assistant" | "user"
-//   content: string
-// }
+export const handleFetch = async () => {
+  const user = await auth.currentUser
+  if (user) {
+    const docRef = doc(db, "api_key", user.uid)
+    const docSnap = await getDoc(docRef)
 
-// export const requestOpenApi = async (message: Message[]) => {
-//   const completion = await openai.createChatCompletion({
-//     model: "gpt-3.5-turbo",
-//     messages: message,
-//     temperature: 0.9,
-//     max_tokens: 2000
-//   })
-
-//   return await completion.data.choices[0].message
-// }
+    if (docSnap.exists()) {
+      console.log("Document data:", docSnap.data())
+    } else {
+      console.log("No such document!")
+    }
+  } else {
+    console.error("No user is signed in.")
+  }
+}
