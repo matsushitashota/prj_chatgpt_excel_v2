@@ -1,19 +1,19 @@
 import styled from "styled-components"
 import { PROMPT } from "./prompt"
 import { RESULT } from "./result"
-import { Button as MuiButton } from "@mui/material"
+import { Button } from "@mui/material"
 
 export const ArticleView = () => {
   return (
     <Container>
       <ArticleWrapper>
-        <Button color="primary" fullWidth>
+        <Button color="primary" variant="outlined" fullWidth>
           Question Copy
         </Button>
         <Question>{PROMPT}</Question>
       </ArticleWrapper>
       <ArticleWrapper>
-        <Button color="success" fullWidth>
+        <Button color="success" variant="outlined" fullWidth>
           Result Copy
         </Button>
         <Result>{RESULT}</Result>
@@ -50,11 +50,4 @@ const Result = styled.div`
   padding: 8px;
   border: 1px solid #4caf50;
   border-radius: 8px;
-`
-
-const Button = styled(MuiButton)`
-  border-radius: 20px;
-  padding: 4px 24px;
-  margin: 4px;
-  border: 1px solid;
 `
