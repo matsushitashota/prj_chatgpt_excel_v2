@@ -1,6 +1,6 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react"
 import * as XLSX from "xlsx"
-import { ExcelData } from "../components/pages/Top"
+import { ExcelData } from "../components/pages/Home"
 
 type Props = {
   e: ChangeEvent<HTMLInputElement>

@@ -1,7 +1,11 @@
 import styled from "styled-components"
 import { Button } from "@mui/material"
 
-export const QuestionChatGpt = () => {
+type Props = {
+  handleSendChatGPT: () => void
+}
+
+export const QuestionChatGpt = ({ handleSendChatGPT }: Props) => {
   return (
     <Container>
       <Wrapper>
@@ -22,6 +26,7 @@ export const QuestionChatGpt = () => {
       <Wrapper>
         <p>Excelデータを元にChatGPTに質問</p>
         <Button
+          onClick={handleSendChatGPT}
           color="inherit"
           sx={{
             borderRadius: "20px",
@@ -43,7 +48,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   height: 120px;
-  gap: 200px;
+  gap: 100px;
   padding: 10px 20px;
   border: 1px solid lightgray;
   border-radius: 8px;

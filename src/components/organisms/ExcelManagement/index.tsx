@@ -1,7 +1,13 @@
 import styled from "styled-components"
 import { Button } from "@mui/material"
+import { ChangeEvent } from "react"
 
-export const ExcelManagement = () => {
+type Props = {
+  handleClickUpload: (e: ChangeEvent<HTMLInputElement>) => void
+  handleDownload: () => void
+}
+
+export const ExcelManagement = ({ handleClickUpload, handleDownload }: Props) => {
   return (
     <Container>
       <Button
@@ -12,10 +18,13 @@ export const ExcelManagement = () => {
           margin: "4px",
           border: "1px solid lightgray"
         }}
+        component="label"
       >
+        <input type="file" hidden onChange={handleClickUpload} />
         UPLOAD
       </Button>
       <Button
+        onClick={handleDownload}
         color="inherit"
         sx={{
           borderRadius: "20px",
@@ -23,7 +32,6 @@ export const ExcelManagement = () => {
           margin: "4px",
           border: "1px solid lightgray"
         }}
-        disabled
       >
         DOWNLOAD
       </Button>

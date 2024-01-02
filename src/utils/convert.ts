@@ -1,16 +1,27 @@
-// const DATA = [
-//   { name: "John", age: 30, height: 160 },
-//   { name: "Jane", age: 25, height: 160 },
-//   { name: "Bob", age: 40, height: 160 },
-// ]
+import { ExcelData, LineData } from "../components/pages/Home"
 
-import { ExcelData } from "../components/pages/Top"
-
+// excelデータをテンプレートをもとに文章に変換
 export const excelConversionToSentence = (excelData: ExcelData): string[] => {
-  return excelData.map(
-    (
-      data
-    ) => `${data.head1}\n\n${data.content1}\n\n${data.head2}\n\n${data.content2}\n\n${data.head3}\n\n${data.content3}\n\n${data.head4}\n\n${data.content4}
-      `
-  )
+  const maxNumber = getMaxNumberFromKey(excelData)
+  return excelData.map((data: LineData) => {
+    let result = ""
+    for (let i = 1; i <= maxNumber; i++) {
+      result += `${data[`c${i}`]}`
+      if (i < maxNumber) {
+        result += "\n\n"
+      }
+    }
+    return result
+  })
+}
+
+// 列の数の最大値を取得
+const getMaxNumberFromKey = (data: ExcelData) => {
+  // excelの2行目のkeyを取得
+  const keys = Object.keys(data[1])
+  const numbers = keys
+    .filter((key) => key.startsWith("c"))
+    .map((key) => parseInt(key.slice(1)))
+    .filter((number) => !isNaN(number))
+  return Math.max(...numbers)
 }
