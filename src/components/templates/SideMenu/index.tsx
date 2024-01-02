@@ -24,7 +24,7 @@ const SideMenu = ({ isOpen, setIsOpen }: Props) => {
           {isOpen && <KeyboardDoubleArrowLeftIcon onClick={() => setIsOpen(!isOpen)} />}
         </UserNameWrapper>
         <HorizontalLine />
-        <Button variant="text" color="inherit">
+        <Button variant="text" color="inherit" onClick={() => router.push("/home")}>
           Home
         </Button>
         <Button variant="text" color="inherit">
