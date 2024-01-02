@@ -1,5 +1,6 @@
-import { Top } from "../components/pages/Top"
+// import { Top } from "../components/pages/Top"
+import Login from "./login"
 
 export default function MyApp() {
-  return <Top />
+  return <Login />
 }
