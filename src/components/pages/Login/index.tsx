@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 
 export const Login = () => {
   const router = useRouter()
+
   const handleClickGoogleSignIn = async () => {
     const successLogin = await signInWithGoogle()
     if (successLogin) {

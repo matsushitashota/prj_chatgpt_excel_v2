@@ -44,8 +44,7 @@ const db = getFirestore(firebaseApp)
 
 export const signInWithGoogle = async (): Promise<boolean> => {
   try {
-    const result = await signInWithPopup(auth, provider)
-    console.log("user", result.user)
+    await signInWithPopup(auth, provider)
     return true
   } catch (error) {
     console.error("error", error)
@@ -55,9 +54,7 @@ export const signInWithGoogle = async (): Promise<boolean> => {
 
 export const handleSignOut = () => {
   signOut(auth)
-    .then(() => {
-      console.log("signout")
-    })
+    .then(() => {})
     .catch((error) => {
       console.log("error", error.message)
     })

@@ -27,7 +27,7 @@ const SideMenu = ({ isOpen, setIsOpen }: Props) => {
         <Button variant="text" color="inherit" onClick={() => router.push("/home")}>
           Home
         </Button>
-        <Button variant="text" color="inherit">
+        <Button variant="text" color="inherit" onClick={() => router.push("/prompts")}>
           Prompts
         </Button>
         <Button variant="text" color="inherit">
