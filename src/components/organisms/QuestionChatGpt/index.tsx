@@ -1,18 +1,37 @@
 import styled from "styled-components"
-import { Button as MuiButton } from "@mui/material"
+import { Button } from "@mui/material"
 
 export const QuestionChatGpt = () => {
   return (
     <Container>
       <Wrapper>
         <p>選択中のテンプレート：テスト１</p>
-        <Button color="inherit" disabled>
+        <Button
+          color="inherit"
+          sx={{
+            borderRadius: "20px",
+            padding: "4px 24px",
+            margin: "4px",
+            border: "1px solid lightgray"
+          }}
+          disabled
+        >
           テンプレートを変更する
         </Button>
       </Wrapper>
       <Wrapper>
         <p>Excelデータを元にChatGPTに質問</p>
-        <Button color="inherit">Question</Button>
+        <Button
+          color="inherit"
+          sx={{
+            borderRadius: "20px",
+            padding: "4px 24px",
+            margin: "4px",
+            border: "1px solid lightgray"
+          }}
+        >
+          Question
+        </Button>
       </Wrapper>
     </Container>
   )
@@ -33,11 +52,4 @@ const Container = styled.div`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-`
-
-const Button = styled(MuiButton)`
-  border-radius: 20px;
-  padding: 4px 24px;
-  margin: 4px;
-  border: 1px solid lightgray;
 `

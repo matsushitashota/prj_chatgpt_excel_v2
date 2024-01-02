@@ -1,23 +1,35 @@
 import styled from "styled-components"
-import { Button as MuiButton } from "@mui/material"
+import { Button } from "@mui/material"
 
 export const ExcelManagement = () => {
   return (
     <Container>
-      <Button color="inherit">UPLOAD</Button>
-      <Button color="inherit" disabled>
+      <Button
+        color="inherit"
+        sx={{
+          borderRadius: "20px",
+          padding: "4px 24px",
+          margin: "4px",
+          border: "1px solid lightgray"
+        }}
+      >
+        UPLOAD
+      </Button>
+      <Button
+        color="inherit"
+        sx={{
+          borderRadius: "20px",
+          padding: "4px 24px",
+          margin: "4px",
+          border: "1px solid lightgray"
+        }}
+        disabled
+      >
         DOWNLOAD
       </Button>
     </Container>
   )
 }
-
-const Button = styled(MuiButton)`
-  border-radius: 20px;
-  padding: 4px 24px;
-  margin: 4px;
-  border: 1px solid lightgray;
-`
 
 const Container = styled.div`
   display: flex;

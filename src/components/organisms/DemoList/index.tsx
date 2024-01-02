@@ -192,11 +192,18 @@ export const DemoList = () => {
       <List>
         {LIST.map((listData, index) => (
           <ListItem key={`upload_data_${index}`} disablePadding>
-            <ListButton>
+            <ListItemButton
+              sx={{
+                borderRadius: "20px",
+                padding: "4px 24px",
+                margin: "4px",
+                border: "1px solid lightgray"
+              }}
+            >
               <ListItemText primary={`${listData.no}`} />
               {listData.loading && <LoopIcon />}
               {listData.completed && <CheckIcon />}
-            </ListButton>
+            </ListItemButton>
           </ListItem>
         ))}
       </List>
@@ -219,11 +226,4 @@ const Container = styled.div`
   /* Hide scrollbar for IE, Edge and Firefox */
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
-`
-
-const ListButton = styled(ListItemButton)`
-  border-radius: 20px;
-  padding: 4px 24px;
-  margin: 4px;
-  border: 1px solid lightgray;
 `

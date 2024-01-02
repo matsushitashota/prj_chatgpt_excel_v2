@@ -7,13 +7,31 @@ export const ArticleView = () => {
   return (
     <Container>
       <ArticleWrapper>
-        <Button color="primary" variant="outlined" fullWidth>
+        <Button
+          color="primary"
+          sx={{
+            borderRadius: "20px",
+            padding: "4px 24px",
+            margin: "4px",
+            border: "1px solid"
+          }}
+          fullWidth
+        >
           Question Copy
         </Button>
         <Question>{PROMPT}</Question>
       </ArticleWrapper>
       <ArticleWrapper>
-        <Button color="success" variant="outlined" fullWidth>
+        <Button
+          color="success"
+          sx={{
+            borderRadius: "20px",
+            padding: "4px 24px",
+            margin: "4px",
+            border: "1px solid"
+          }}
+          fullWidth
+        >
           Result Copy
         </Button>
         <Result>{RESULT}</Result>
