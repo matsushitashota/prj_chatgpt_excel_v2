@@ -1,5 +1,6 @@
 import styled from "styled-components"
-import { Button } from "@mui/material"
+import { Button, Snackbar, Alert, SnackbarCloseReason } from "@mui/material"
+import React from "react"
 
 type Props = {
   questionData: string
@@ -7,6 +8,28 @@ type Props = {
 }
 
 export const ArticleView = ({ questionData, resultData }: Props) => {
+  const [open, setOpen] = React.useState(false)
+
+  const handleCopy = async (text: string) => {
+    await navigator.clipboard.writeText(text)
+    setOpen(true)
+  }
+
+  const handleSnackbarClose = (event?: React.SyntheticEvent<Element, Event> | Event, reason?: SnackbarCloseReason) => {
+    if (reason === "clickaway") {
+      return
+    }
+    setOpen(false)
+  }
+
+  const handleQuestionCopy = async () => {
+    handleCopy(questionData)
+  }
+
+  const handleResultCopy = async () => {
+    handleCopy(resultData)
+  }
+
   return (
     <Container>
       <ArticleWrapper>
@@ -19,6 +42,7 @@ export const ArticleView = ({ questionData, resultData }: Props) => {
             border: "1px solid"
           }}
           fullWidth
+          onClick={handleQuestionCopy}
         >
           Question Copy
         </Button>
@@ -34,11 +58,22 @@ export const ArticleView = ({ questionData, resultData }: Props) => {
             border: "1px solid"
           }}
           fullWidth
+          onClick={handleResultCopy}
         >
           Result Copy
         </Button>
         <TextArea isResult={true}>{resultData}</TextArea>
       </ArticleWrapper>
+      <Snackbar
+        open={open}
+        autoHideDuration={2000}
+        onClose={handleSnackbarClose}
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+      >
+        <Alert onClose={handleSnackbarClose} severity="success" sx={{ width: "100%" }}>
+          クリップボードにコピーしました
+        </Alert>
+      </Snackbar>
     </Container>
   )
 }

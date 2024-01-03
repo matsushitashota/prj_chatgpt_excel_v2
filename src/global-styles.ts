@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components"
 
 export const GlobalStyles = createGlobalStyle`
   /* Box sizing rules */
@@ -39,4 +39,8 @@ export const GlobalStyles = createGlobalStyle`
     display: block;
   }
 
-`;
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+`

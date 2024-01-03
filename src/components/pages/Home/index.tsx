@@ -89,7 +89,11 @@ export const Home = () => {
     <Layout meta={{ pageTitle: "Home" }}>
       <Container>
         <SideContainer>
-          <ExcelManagement handleClickUpload={handleClickUpload} handleDownload={handleDownload} />
+          <ExcelManagement
+            handleClickUpload={handleClickUpload}
+            handleDownload={handleDownload}
+            unavailableDownload={resultList.length < 1}
+          />
           <UploadList
             uploadDataList={uploadDataList}
             handleSelectUploadItem={handleSelectUploadItem}

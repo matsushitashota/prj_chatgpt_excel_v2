@@ -28,9 +28,18 @@ export const UploadList = ({ uploadDataList, handleSelectUploadItem, selectedIte
                 handleSelectUploadItem(index)
               }}
             >
-              <ListItemText primary={`${listData.title}`} />
-              {listData.loading && <LoopIcon />}
-              {listData.completed && <CheckIcon />}
+              <ListItemText
+                primary={`${listData.title}`}
+                sx={{
+                  overflow: "hidden",
+                  textOverflow: "ellipsis",
+                  whiteSpace: "nowrap"
+                }}
+              />
+              {listData.loading && (
+                <LoopIcon style={{ color: "#42a5f5", animation: "spin 4s linear infinite reverse" }} />
+              )}
+              {listData.completed && <CheckIcon style={{ color: "#4caf50" }} />}
             </ListItemButton>
           </ListItem>
         ))}
