@@ -94,6 +94,8 @@ export const Home = () => {
 
   const selectedQuestionData = questionList[selectedItemIndex] ?? "Dataが存在しません"
   const selectedResultDta = resultList[selectedItemIndex] ?? "未生成"
+  const notExistQuestionList = questionList.length < 1
+  const notExistResultList = resultList.length < 1
 
   return (
     <Layout meta={{ pageTitle: "Home" }}>
@@ -102,7 +104,7 @@ export const Home = () => {
           <ExcelManagement
             handleClickUpload={handleClickUpload}
             handleDownload={handleDownload}
-            unavailableDownload={resultList.length < 1}
+            unavailableDownload={notExistResultList}
           />
           <UploadList
             uploadDataList={uploadDataList}
@@ -111,7 +113,11 @@ export const Home = () => {
           />
         </SideContainer>
         <MainContainer>
-          <QuestionChatGpt handleSendChatGPT={handleSendChatGPT} handleAllSendChatGPT={handleAllSendChatGPT} />
+          <QuestionChatGpt
+            handleSendChatGPT={handleSendChatGPT}
+            handleAllSendChatGPT={handleAllSendChatGPT}
+            unavailableQuestion={notExistQuestionList}
+          />
           {questionList.length > 0 && (
             <>
               <ArticleView questionData={selectedQuestionData} resultData={selectedResultDta} />

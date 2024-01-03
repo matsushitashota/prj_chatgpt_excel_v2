@@ -4,9 +4,10 @@ import { Button } from "@mui/material"
 type Props = {
   handleSendChatGPT: () => void
   handleAllSendChatGPT: () => void
+  unavailableQuestion: boolean
 }
 
-export const QuestionChatGpt = ({ handleSendChatGPT, handleAllSendChatGPT }: Props) => {
+export const QuestionChatGpt = ({ handleSendChatGPT, handleAllSendChatGPT, unavailableQuestion }: Props) => {
   return (
     <Container>
       {/* <Wrapper>
@@ -35,6 +36,7 @@ export const QuestionChatGpt = ({ handleSendChatGPT, handleAllSendChatGPT }: Pro
             margin: "4px",
             border: "1px solid lightgray"
           }}
+          disabled={unavailableQuestion}
         >
           Question
         </Button>
@@ -50,6 +52,7 @@ export const QuestionChatGpt = ({ handleSendChatGPT, handleAllSendChatGPT }: Pro
             margin: "4px",
             border: "1px solid lightgray"
           }}
+          disabled={unavailableQuestion}
         >
           bulk question
         </Button>
