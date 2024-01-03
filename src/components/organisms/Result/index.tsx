@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material"
-import { ExcelData } from "../../pages/Top"
+import { ExcelData } from "../../pages/Home"
 import CheckIcon from "@mui/icons-material/Check"
 import LoopIcon from "@mui/icons-material/Loop"
 
