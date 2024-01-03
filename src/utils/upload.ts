@@ -1,13 +1,15 @@
 import { ChangeEvent, Dispatch, SetStateAction } from "react"
 import * as XLSX from "xlsx"
 import { ExcelData } from "../components/pages/Home"
+import { excelConversionToSentence } from "./convert"
 
 type Props = {
   e: ChangeEvent<HTMLInputElement>
   setUploadDataList: Dispatch<SetStateAction<ExcelData>>
+  setQuestionList: Dispatch<SetStateAction<string[]>>
 }
 
-export const uploadExcel = ({ e, setUploadDataList }: Props) => {
+export const uploadExcel = ({ e, setUploadDataList, setQuestionList }: Props) => {
   if (!e.target.files || e.target.files.length === 0) return
   setUploadDataList([])
   const file = e.target.files[0]
@@ -24,6 +26,7 @@ export const uploadExcel = ({ e, setUploadDataList }: Props) => {
     // ワークシートを配列に変換
     const data: ExcelData = XLSX.utils.sheet_to_json(ws)
     setUploadDataList(data)
+    setQuestionList(excelConversionToSentence(data))
   }
   reader.readAsBinaryString(file)
 }

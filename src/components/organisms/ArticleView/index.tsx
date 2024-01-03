@@ -1,9 +1,12 @@
 import styled from "styled-components"
-import { PROMPT } from "./prompt"
-import { RESULT } from "./result"
 import { Button } from "@mui/material"
 
-export const ArticleView = () => {
+type Props = {
+  questionData: string
+  resultData: string
+}
+
+export const ArticleView = ({ questionData, resultData }: Props) => {
   return (
     <Container>
       <ArticleWrapper>
@@ -19,7 +22,7 @@ export const ArticleView = () => {
         >
           Question Copy
         </Button>
-        <Question>{PROMPT}</Question>
+        <Question>{questionData}</Question>
       </ArticleWrapper>
       <ArticleWrapper>
         <Button
@@ -34,7 +37,7 @@ export const ArticleView = () => {
         >
           Result Copy
         </Button>
-        <Result>{RESULT}</Result>
+        <Result>{resultData}</Result>
       </ArticleWrapper>
     </Container>
   )
@@ -55,6 +58,8 @@ const ArticleWrapper = styled.div`
 `
 
 const Question = styled.div`
+  width: 100%;
+  min-height: 600px;
   white-space: pre-wrap;
   font-size: 14px;
   padding: 8px;
@@ -63,6 +68,8 @@ const Question = styled.div`
 `
 
 const Result = styled.div`
+  width: 100%;
+  min-height: 600px;
   white-space: pre-wrap;
   font-size: 14px;
   padding: 8px;

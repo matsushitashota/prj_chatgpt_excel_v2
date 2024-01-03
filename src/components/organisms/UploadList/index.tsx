@@ -6,9 +6,11 @@ import { ExcelData } from "../../pages/Home"
 
 type Props = {
   uploadDataList: ExcelData
+  handleSelectUploadItem: (index: number) => void
+  selectedItemIndex: number
 }
 
-export const DemoList = ({ uploadDataList }: Props) => {
+export const UploadList = ({ uploadDataList, handleSelectUploadItem, selectedItemIndex }: Props) => {
   return (
     <Container>
       <List>
@@ -19,7 +21,11 @@ export const DemoList = ({ uploadDataList }: Props) => {
                 borderRadius: "20px",
                 padding: "4px 24px",
                 margin: "4px",
-                border: "1px solid lightgray"
+                border: "1px solid lightgray",
+                backgroundColor: selectedItemIndex === index ? "lightgray" : "white" // This line has been added
+              }}
+              onClick={() => {
+                handleSelectUploadItem(index)
               }}
             >
               <ListItemText primary={`${listData.title}`} />
