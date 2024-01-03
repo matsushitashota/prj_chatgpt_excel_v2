@@ -12,7 +12,7 @@ export type Message = {
   content: string
 }
 
-export const requestOpenApi = async (message: Message[]) => {
+export const requestOpenApi = async (message: Message[], api_key: string) => {
   const response = await axios.post(
     "https://api.openai.com/v1/chat/completions",
     {
@@ -26,7 +26,7 @@ export const requestOpenApi = async (message: Message[]) => {
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
+        Authorization: `Bearer ${api_key}`,
         "OpenAI-Learning-Mode": "off"
       }
     }
@@ -63,16 +63,33 @@ export const handleSignOut = () => {
 export const postApiKey = async (api_key: string) => {
   const user = await auth.currentUser
   if (user) {
-    const docRef = await setDoc(doc(db, "api_key", user.uid), {
+    await setDoc(doc(db, "api_key", user.uid), {
       api_key
     })
-    console.log("Document written with ID: ", docRef)
+    console.log("success")
   } else {
     console.error("No user is signed in.")
   }
 }
 
-export const getApiKey = async (uid: string): Promise<string | null> => {
+export const getApiKey = async (): Promise<string | null> => {
+  const user = await auth.currentUser
+  if (!user) {
+    console.error("No user is signed in.")
+    return null
+  }
+  const docRef = doc(db, "api_key", user.uid)
+  const docSnap = await getDoc(docRef)
+
+  if (docSnap.exists()) {
+    return docSnap.data().api_key
+  } else {
+    console.log("No such document!")
+    return null
+  }
+}
+
+export const getApiKeyForReload = async (uid: string): Promise<string | null> => {
   const docRef = doc(db, "api_key", uid)
   const docSnap = await getDoc(docRef)
 

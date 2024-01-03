@@ -3,7 +3,7 @@ import { Layout } from "../../templates/Layout"
 import { Button, TextField, IconButton, InputAdornment } from "@mui/material"
 import { useForm } from "react-hook-form"
 import { useEffect, useState } from "react"
-import { getApiKey, postApiKey } from "@/src/hooks/api"
+import { getApiKeyForReload, postApiKey } from "@/src/hooks/api"
 import Visibility from "@mui/icons-material/Visibility"
 import VisibilityOff from "@mui/icons-material/VisibilityOff"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
@@ -19,7 +19,7 @@ export const useGetApiKey = () => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        getApiKey(user.uid).then((result) => setApiKey(result))
+        getApiKeyForReload(user.uid).then((result) => setApiKey(result))
       }
     })
 

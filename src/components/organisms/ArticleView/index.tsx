@@ -62,7 +62,7 @@ export const ArticleView = ({ questionData, resultData }: Props) => {
         >
           Result Copy
         </Button>
-        <TextArea isResult={true}>{resultData}</TextArea>
+        <TextArea $isResult>{resultData}</TextArea>
       </ArticleWrapper>
       <Snackbar
         open={open}
@@ -92,12 +92,12 @@ const ArticleWrapper = styled.div`
   gap: 10px;
 `
 
-const TextArea = styled.div<{ isResult?: boolean }>`
+const TextArea = styled.div<{ $isResult?: boolean }>`
   width: 100%;
   min-height: 600px;
   white-space: pre-wrap;
   font-size: 14px;
   padding: 8px;
-  border: 1px solid ${(props) => (props.isResult ? "#4caf50" : "#42a5f5")};
+  border: 1px solid ${(props) => (props.$isResult ? "#4caf50" : "#42a5f5")};
   border-radius: 8px;
 `

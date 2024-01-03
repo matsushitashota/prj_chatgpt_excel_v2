@@ -6,7 +6,7 @@ import { ArticleView } from "../../organisms/ArticleView"
 import { ExcelManagement } from "../../organisms/ExcelManagement"
 import { ChangeEvent, useState } from "react"
 import { uploadExcel } from "@/src/utils/upload"
-import { requestOpenApi } from "@/src/hooks/api"
+import { getApiKey, requestOpenApi } from "@/src/hooks/api"
 import { downloadExcel } from "@/src/utils/download"
 
 export type LineData = {
@@ -25,16 +25,21 @@ export const Home = () => {
   const [selectedItemIndex, setSelectedItemIndex] = useState<number>(0)
 
   const handleSendChatGPT = async () => {
+    const api_key = await getApiKey()
+    if (!api_key) return
     for (let i = 0; i < questionList.length; i++) {
       setUploadDataList((prevState) =>
         prevState.map((item, index) => (index === i ? { ...item, loading: true } : item))
       )
-      const res = await requestOpenApi([
-        {
-          role: "user",
-          content: questionList[i]
-        }
-      ])
+      const res = await requestOpenApi(
+        [
+          {
+            role: "user",
+            content: questionList[i]
+          }
+        ],
+        api_key
+      )
       setUploadDataList((prevState) =>
         prevState.map((item, index) => (index === i ? { ...item, loading: false, completed: true } : item))
       )
@@ -46,17 +51,22 @@ export const Home = () => {
   // 一括で送信する場合
   // TODO:settingsで設定できるようにする
   const handleAllSendChatGPT = async () => {
+    const api_key = await getApiKey()
+    if (!api_key) return
     const requests = questionList.map(async (question, i) => {
       setUploadDataList((prevState) =>
         prevState.map((item, index) => (index === i ? { ...item, loading: true } : item))
       )
 
-      const res = await requestOpenApi([
-        {
-          role: "user",
-          content: question
-        }
-      ])
+      const res = await requestOpenApi(
+        [
+          {
+            role: "user",
+            content: question
+          }
+        ],
+        api_key
+      )
 
       setUploadDataList((prevState) =>
         prevState.map((item, index) => (index === i ? { ...item, loading: false, completed: true } : item))
