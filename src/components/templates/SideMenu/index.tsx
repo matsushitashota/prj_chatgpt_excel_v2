@@ -16,24 +16,48 @@ const SideMenu = ({ isOpen, setIsOpen }: Props) => {
     router.push("/login")
   }
 
+  const handleClickMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const value = event.currentTarget.value
+    switch (value) {
+      case "home":
+        router.push("/home")
+        break
+      case "prompts":
+        router.push("/prompts")
+        break
+      case "help":
+        router.push("/help")
+        break
+      case "settings":
+        router.push("/settings")
+        break
+      default:
+        break
+    }
+  }
+
+  const handleClickClose = () => {
+    setIsOpen(!isOpen)
+  }
+
   return (
     <Container $isOpen={isOpen}>
       <SideMenuContentsContainer>
         <UserNameWrapper>
           <UserName>松下生太</UserName>
-          {isOpen && <KeyboardDoubleArrowLeftIcon onClick={() => setIsOpen(!isOpen)} />}
+          {isOpen && <KeyboardDoubleArrowLeftIcon onClick={handleClickClose} />}
         </UserNameWrapper>
         <HorizontalLine />
-        <Button variant="text" color="inherit" onClick={() => router.push("/home")}>
+        <Button variant="text" color="inherit" value="home" onClick={handleClickMenu}>
           Home
         </Button>
-        <Button variant="text" color="inherit" onClick={() => router.push("/prompts")}>
+        <Button variant="text" color="inherit" value="prompts" onClick={handleClickMenu}>
           Prompts
         </Button>
-        <Button variant="text" color="inherit">
+        <Button variant="text" color="inherit" value="help" onClick={handleClickMenu}>
           Help
         </Button>
-        <Button variant="text" color="inherit">
+        <Button variant="text" color="inherit" value="settings" onClick={handleClickMenu}>
           Settings
         </Button>
         <Button variant="text" color="inherit" onClick={handleLogout}>

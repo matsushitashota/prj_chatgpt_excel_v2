@@ -4,14 +4,6 @@ export interface HeadProps {
   pageTitle: string
   meta?: {
     description?: string
-    keywords?: string
-    googleSiteVerification?: string
-    ogTitle?: string
-    ogType?: string
-    ogUrl?: string
-    ogImage?: string
-    ogSiteName?: string
-    ogDescription?: string
   }
 }
 /* // metaにnameとcontentをpropsから適応する */

@@ -34,7 +34,7 @@ export const Layout = ({ children, meta }: Props) => {
       <Head {...meta} />
       <Header $isOpen={isOpen}>
         {!isOpen && <MenuIcon onClick={() => setIsOpen(!isOpen)} />}
-        <Title>Home</Title>
+        <Title>{meta.pageTitle}</Title>
       </Header>
       <SideMenu isOpen={isOpen} setIsOpen={setIsOpen} />
       <MainContent $isOpen={isOpen}>

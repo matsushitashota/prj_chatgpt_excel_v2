@@ -60,11 +60,11 @@ export const handleSignOut = () => {
     })
 }
 
-export const handleSave = async () => {
+export const postApiKey = async (api_key: string) => {
   const user = await auth.currentUser
   if (user) {
     const docRef = await setDoc(doc(db, "api_key", user.uid), {
-      key: "key12345"
+      api_key
     })
     console.log("Document written with ID: ", docRef)
   } else {
@@ -72,18 +72,15 @@ export const handleSave = async () => {
   }
 }
 
-export const handleFetch = async () => {
-  const user = await auth.currentUser
-  if (user) {
-    const docRef = doc(db, "api_key", user.uid)
-    const docSnap = await getDoc(docRef)
+export const getApiKey = async (uid: string): Promise<string | null> => {
+  const docRef = doc(db, "api_key", uid)
+  const docSnap = await getDoc(docRef)
 
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data())
-    } else {
-      console.log("No such document!")
-    }
+  if (docSnap.exists()) {
+    console.log("Document data:", docSnap.data().api_key)
+    return docSnap.data().api_key
   } else {
-    console.error("No user is signed in.")
+    console.log("No such document!")
+    return null
   }
 }
