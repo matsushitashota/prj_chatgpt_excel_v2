@@ -84,7 +84,14 @@ export const Home = () => {
     downloadExcel({ uploadDataList, resultList })
   }
 
+  const resetData = () => {
+    setUploadDataList([])
+    setQuestionList([])
+    setResultList([])
+  }
+
   const handleClickUpload = (e: ChangeEvent<HTMLInputElement>) => {
+    resetData()
     uploadExcel({ e, setUploadDataList, setQuestionList })
   }
 

@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import { Button } from "@mui/material"
+import { downloadTemplateExcel } from "@/src/utils/download"
 
 type Props = {
   handleSendChatGPT: () => void
@@ -8,6 +9,11 @@ type Props = {
 }
 
 export const QuestionChatGpt = ({ handleSendChatGPT, handleAllSendChatGPT, unavailableQuestion }: Props) => {
+  const handleDownloadClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault()
+    downloadTemplateExcel()
+  }
+
   return (
     <Container>
       {/* <Wrapper>
@@ -57,6 +63,11 @@ export const QuestionChatGpt = ({ handleSendChatGPT, handleAllSendChatGPT, unava
           bulk question
         </Button>
       </Wrapper>
+      <p>
+        <a href="#" onClick={handleDownloadClick}>
+          sample download
+        </a>
+      </p>
     </Container>
   )
 }
