@@ -9,6 +9,11 @@ type Props = {
 }
 
 export const ExcelManagement = ({ handleClickUpload, handleDownload, unavailableDownload }: Props) => {
+  const resetInputFile = (event: React.MouseEvent<HTMLInputElement>) => {
+    const input = event.currentTarget as HTMLInputElement
+    input.value = ""
+  }
+
   return (
     <Container>
       <Button
@@ -22,7 +27,7 @@ export const ExcelManagement = ({ handleClickUpload, handleDownload, unavailable
         }}
         component="label"
       >
-        <input type="file" hidden onChange={handleClickUpload} />
+        <input type="file" hidden onChange={handleClickUpload} onClick={resetInputFile} />
         UPLOAD
       </Button>
       <Button

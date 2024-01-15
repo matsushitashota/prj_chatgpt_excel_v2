@@ -17,8 +17,7 @@ export const excelConversionToSentence = (excelData: ExcelData): string[] => {
 
 // 列の数の最大値を取得
 const getMaxNumberFromKey = (data: ExcelData) => {
-  // excelの2行目のkeyを取得
-  const keys = Object.keys(data[1])
+  const keys = Object.keys(data[0])
   const numbers = keys
     .filter((key) => key.startsWith("c"))
     .map((key) => parseInt(key.slice(1)))
