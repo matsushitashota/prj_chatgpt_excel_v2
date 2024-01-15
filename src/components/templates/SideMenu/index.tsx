@@ -1,7 +1,9 @@
 import { handleSignOut } from "@/src/hooks/api"
+import { userNameSelector } from "@/src/store/domain/user"
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft"
 import { Button as MuiButton } from "@mui/material"
 import { useRouter } from "next/router"
+import { useSelector } from "react-redux"
 import styled from "styled-components"
 
 type Props = {
@@ -11,6 +13,8 @@ type Props = {
 
 const SideMenu = ({ isOpen, setIsOpen }: Props) => {
   const router = useRouter()
+  const userName = useSelector(userNameSelector)
+
   const handleLogout = async () => {
     handleSignOut()
     router.push("/login")
@@ -44,7 +48,7 @@ const SideMenu = ({ isOpen, setIsOpen }: Props) => {
     <Container $isOpen={isOpen}>
       <SideMenuContentsContainer>
         <UserNameWrapper>
-          <UserName>松下生太</UserName>
+          <UserName>{userName}</UserName>
           {isOpen && <KeyboardDoubleArrowLeftIcon onClick={handleClickClose} />}
         </UserNameWrapper>
         <HorizontalLine />
