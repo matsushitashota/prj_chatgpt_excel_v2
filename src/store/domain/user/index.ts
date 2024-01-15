@@ -15,9 +15,9 @@ const setUid: types.SetUserState = (state, { payload }) =>
     userName: state.userName
   })
 
-const setUserName: types.SetUserState = (state, { payload }) =>
+const setUserName: types.SetUserName = (state, { payload }) =>
   (state = {
-    uid: state.uid,
+    ...state,
     userName: payload.userName
   })
 
