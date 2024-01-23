@@ -53,31 +53,37 @@ export const Home = () => {
   const handleAllSendChatGPT = async () => {
     const api_key = await getApiKey()
     if (!api_key) return
-    const requests = questionList.map(async (question, i) => {
-      setUploadDataList((prevState) =>
-        prevState.map((item, index) => (index === i ? { ...item, loading: true } : item))
-      )
 
-      const res = await requestOpenApi(
-        [
-          {
-            role: "user",
-            content: question
-          }
-        ],
-        api_key
-      )
+    // リクエストをバッチサイズに分ける
+    const batchSize = 10
+    for (let i = 0; i < questionList.length; i += batchSize) {
+      const batchQuestions = questionList.slice(i, i + batchSize)
+      const requests = batchQuestions.map(async (question, index) => {
+        const actualIndex = i + index
+        setUploadDataList((prevState) =>
+          prevState.map((item, idx) => (idx === actualIndex ? { ...item, loading: true } : item))
+        )
 
-      setUploadDataList((prevState) =>
-        prevState.map((item, index) => (index === i ? { ...item, loading: false, completed: true } : item))
-      )
+        const res = await requestOpenApi(
+          [
+            {
+              role: "user",
+              content: question
+            }
+          ],
+          api_key
+        )
 
-      if (res) {
-        setResultList((prevState) => [...prevState, res.content ?? ""])
-      }
-    })
+        setUploadDataList((prevState) =>
+          prevState.map((item, idx) => (idx === actualIndex ? { ...item, loading: false, completed: true } : item))
+        )
 
-    await Promise.all(requests)
+        if (res) {
+          setResultList((prevState) => [...prevState, res.content ?? ""])
+        }
+      })
+      await Promise.all(requests)
+    }
   }
 
   const handleDownload = () => {
@@ -99,6 +105,33 @@ export const Home = () => {
     setSelectedItemIndex(index)
   }
 
+  const handleReloadUploadItem = async (reloadIndex: number) => {
+    const api_key = await getApiKey()
+    if (!api_key) return
+    setUploadDataList((prevState) =>
+      prevState.map((item, index) => (index === reloadIndex ? { ...item, loading: true, completed: false } : item))
+    )
+    setResultList((prevState) => [...prevState.slice(0, reloadIndex), "", ...prevState.slice(reloadIndex + 1)])
+    const res = await requestOpenApi(
+      [
+        {
+          role: "user",
+          content: questionList[reloadIndex]
+        }
+      ],
+      api_key
+    )
+    setUploadDataList((prevState) =>
+      prevState.map((item, index) => (index === reloadIndex ? { ...item, loading: false, completed: true } : item))
+    )
+    if (!res) return
+    setResultList((prevState) => [
+      ...prevState.slice(0, reloadIndex),
+      res.content ?? "",
+      ...prevState.slice(reloadIndex + 1)
+    ])
+  }
+
   const selectedQuestionData = questionList[selectedItemIndex] ?? "Dataが存在しません"
   const selectedResultDta = resultList[selectedItemIndex] ?? "未生成"
   const notExistQuestionList = questionList.length < 1
@@ -115,8 +148,9 @@ export const Home = () => {
           />
           <UploadList
             uploadDataList={uploadDataList}
-            handleSelectUploadItem={handleSelectUploadItem}
             selectedItemIndex={selectedItemIndex}
+            handleSelectUploadItem={handleSelectUploadItem}
+            handleReloadUploadItem={handleReloadUploadItem}
           />
         </SideContainer>
         <MainContainer>
@@ -149,13 +183,13 @@ const Container = styled.div`
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 80%;
+  width: 70%;
   gap: 30px;
 `
 
 const SideContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 20%;
+  width: 25%;
   gap: 20px;
 `
