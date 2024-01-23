@@ -18,6 +18,8 @@ export type LineData = {
 
 export type ExcelData = LineData[]
 
+const BATCH_SIZE = 10
+
 export const Home = () => {
   const [uploadDataList, setUploadDataList] = useState<ExcelData>([])
   const [questionList, setQuestionList] = useState<string[]>([])
@@ -55,9 +57,8 @@ export const Home = () => {
     if (!api_key) return
 
     // リクエストをバッチサイズに分ける
-    const batchSize = 10
-    for (let i = 0; i < questionList.length; i += batchSize) {
-      const batchQuestions = questionList.slice(i, i + batchSize)
+    for (let i = 0; i < questionList.length; i += BATCH_SIZE) {
+      const batchQuestions = questionList.slice(i, i + BATCH_SIZE)
       const requests = batchQuestions.map(async (question, index) => {
         const actualIndex = i + index
         setUploadDataList((prevState) =>
