@@ -2,15 +2,22 @@ import styled from "styled-components"
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material"
 import CheckIcon from "@mui/icons-material/Check"
 import LoopIcon from "@mui/icons-material/Loop"
+import ReplayIcon from "@mui/icons-material/Replay"
 import { ExcelData } from "../../pages/Home"
 
 type Props = {
   uploadDataList: ExcelData
-  handleSelectUploadItem: (index: number) => void
   selectedItemIndex: number
+  handleSelectUploadItem: (index: number) => void
+  handleReloadUploadItem: (index: number) => void
 }
 
-export const UploadList = ({ uploadDataList, handleSelectUploadItem, selectedItemIndex }: Props) => {
+export const UploadList = ({
+  uploadDataList,
+  selectedItemIndex,
+  handleSelectUploadItem,
+  handleReloadUploadItem
+}: Props) => {
   return (
     <Container>
       <List>
@@ -40,6 +47,16 @@ export const UploadList = ({ uploadDataList, handleSelectUploadItem, selectedIte
                 <LoopIcon style={{ color: "#42a5f5", animation: "spin 4s linear infinite reverse" }} />
               )}
               {listData.completed && <CheckIcon style={{ color: "#4caf50" }} />}
+              {listData.completed && (
+                <ReplayIcon
+                  style={{ color: "#4caf50" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "#42a5f5")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "#4caf50")}
+                  onClick={() => {
+                    handleReloadUploadItem(index)
+                  }}
+                />
+              )}
             </ListItemButton>
           </ListItem>
         ))}
