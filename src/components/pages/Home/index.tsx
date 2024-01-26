@@ -18,7 +18,7 @@ export type LineData = {
 
 export type ExcelData = LineData[]
 
-const BATCH_SIZE = 10
+const BATCH_SIZE = 5
 
 export const Home = () => {
   const [uploadDataList, setUploadDataList] = useState<ExcelData>([])
