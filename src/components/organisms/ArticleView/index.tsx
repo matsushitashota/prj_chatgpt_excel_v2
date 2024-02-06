@@ -9,6 +9,8 @@ type Props = {
 
 export const ArticleView = ({ questionData, resultData }: Props) => {
   const [open, setOpen] = React.useState(false)
+  const questionDataLength = questionData.length
+  const resultDataLength = resultData === "未生成" ? "" : resultData.length
 
   const handleCopy = async (text: string) => {
     await navigator.clipboard.writeText(text)
@@ -47,6 +49,7 @@ export const ArticleView = ({ questionData, resultData }: Props) => {
           Question Copy
         </Button>
         <TextArea>{questionData}</TextArea>
+        <LengthArea>文字数：{questionDataLength}</LengthArea>
       </ArticleWrapper>
       <ArticleWrapper>
         <Button
@@ -63,6 +66,7 @@ export const ArticleView = ({ questionData, resultData }: Props) => {
           Result Copy
         </Button>
         <TextArea $isResult>{resultData}</TextArea>
+        <LengthArea $isResult>文字数：{resultDataLength}</LengthArea>
       </ArticleWrapper>
       <Snackbar
         open={open}
@@ -95,6 +99,14 @@ const ArticleWrapper = styled.div`
 const TextArea = styled.div<{ $isResult?: boolean }>`
   width: 100%;
   min-height: 600px;
+  white-space: pre-wrap;
+  font-size: 14px;
+  padding: 8px;
+  border: 1px solid ${(props) => (props.$isResult ? "#4caf50" : "#42a5f5")};
+  border-radius: 8px;
+`
+const LengthArea = styled.div<{ $isResult?: boolean }>`
+  width: 100%;
   white-space: pre-wrap;
   font-size: 14px;
   padding: 8px;
